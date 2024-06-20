@@ -33,7 +33,7 @@ x_cl_buf = [];
 y_cl_buf = [];
 d_buf = [];
 
-for i=1:1*24
+for i=1:2*24
     %% HIGH LEVEL EMPC
     % time step
     Delta = 12*300; %  15 minutes
@@ -220,6 +220,12 @@ for i=1:1*24
     x0 = x_cl(:,k+1); %[0.0035; 0.001; 15; 0.008];
 end
 Plotting
+
+resH.x = x_cl_buf;
+resH.y = y_cl_buf;
+resH.u = u_cl_buf;
+resH.d = d_buf;
+save('resultHierarchical.mat','resH');
 %%
 
 %%
