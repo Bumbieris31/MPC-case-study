@@ -1,6 +1,6 @@
 load('resultHierarchical.mat');
 load('resultSingleLayer.mat');
-totalHours =  48;
+totalHours =  24;
 
 figure(1);
 subplot(2,4,1);
@@ -29,3 +29,4 @@ plot(0:1/4:totalHours-1/4, resS.u(3,:), 'LineWidth', 1.2);  title(' heat supply 
 subplot(2,4,8);
 plot(0:1/12:totalHours-1/12, resH.d(1,:), 'LineWidth', 1.2); hold on;
 plot(0:1/4:totalHours-1/4, resS.d(1,:), 'LineWidth', 1.2);  title(' Incoming radiation in W m^{-2}');
+legend('Hierarhical','SingleLayer');

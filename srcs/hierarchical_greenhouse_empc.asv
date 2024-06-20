@@ -33,7 +33,7 @@ x_cl_buf = [];
 y_cl_buf = [];
 d_buf = [];
 
-for i=1:30*24
+for i=1:1*24
     %% HIGH LEVEL EMPC
     % time step
     Delta = 12*300; %  15 minutes
@@ -70,13 +70,7 @@ for i=1:30*24
         opti.subject_to(xhat(:,k+1)==f(xhat(:,k),xsphat(:,k),d_p(:,k)))
         
         % Input constraints
-        iglob = d_cl(1,i:(i+N-1));
-        if iglob(k) > 10
-            d = 1;
-        else 
-            d = 0;
-        end
-        opti.subject_to(10 +5*d <= xsphat(1,k) <= 30);
+        opti.subject_to(10 <= xsphat(1,k) <= 30);
         opti.subject_to(0 <= xsphat(2,k));% <= 7.5);
         
         % State/output constraints
@@ -88,8 +82,8 @@ for i=1:30*24
         
         % Add stage cost
         cost = cost + c_dw*(xhat(1,k+1)-xhat(1,k)) ... %[0, 48E-5]
-             + xsphat(2,k)*10^(-3);% ... % [0, 2.4E-5]
-             %+ 10^(-6)*xsphat(1,k);
+             + xsphat(2,k)*10^(-3) ... % [0, 2.4E-5]
+             + 10^(-6)*xsphat(1,k);
     
     end
     % Define objective function
@@ -167,7 +161,7 @@ for i=1:30*24
         cost = cost + c_tco2*(xsp(2,k) - xhat(2,k))^2 + ...
             c_tair*(xsp(3,k) - xhat(3,k))^2 + ...
             c_co2*uhat(1,k)*10^(-6) + ...
-            uhat(2,k) + ...
+            uhat(2,k)
             c_q*uhat(3,k);
     
     end
@@ -197,7 +191,7 @@ for i=1:30*24
     disp("Simulation step:")
     total_cost = 0;
     for k=1:Nsim
-        % disp(k)
+        disp(k)
         % Set current state at time k as initial state in MPC optimization
         opti.set_value(x0_p,x_cl(:,k));
         opti.set_value(d_p,d_cl(:,t0+k:(t0+k+N-1)));

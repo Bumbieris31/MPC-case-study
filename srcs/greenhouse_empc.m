@@ -92,7 +92,7 @@ solver_options.ipopt.sb = 'yes';
 opti.solver('ipopt',solver_options);
 
 % Closed-loop simulation
-Nsim = 4*48; % Number of simulation time steps
+Nsim = 4*24; % Number of simulation time steps
 
 % Initialize closed-loop state and input variables
 x_cl = zeros(4,Nsim+1);
